@@ -1,7 +1,13 @@
 <?php
-session_start();
+session_start(); // セッション開始
+
 include "funcs.php";
-sschk();
+
+// URLパラメータで"skip_check"がセットされているか確認
+if (!isset($_GET['skip_check']) || $_GET['skip_check'] !== 'true') {
+    // "skip_check"が無い場合や"true"ではない場合、ログインチェックを実行
+    sschk();
+}
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +17,6 @@ sschk();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ユーザー登録</title>
   <style>
-    /* 基本スタイルリセット */
     * {
       margin: 0;
       padding: 0;
@@ -21,47 +26,39 @@ sschk();
     body {
       font-family: 'Arial', sans-serif;
       background-color: #f4f7f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
       color: #333;
-      padding: 20px;
-    }
-
-    header {
-      background-color: #2c3e50;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      font-size: 1.8rem;
-      font-weight: bold;
     }
 
     .container {
-      max-width: 600px;
-      margin: 40px auto;
       background-color: white;
-      padding: 30px;
+      padding: 40px;
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
     }
 
-    legend {
-      font-size: 1.5rem;
+    h2 {
+      text-align: center;
       color: #34495e;
       margin-bottom: 20px;
-      text-align: center;
+      font-size: 1.8rem;
     }
 
     label {
       display: block;
-      margin-bottom: 15px;
       font-size: 1.1rem;
-      color: #555;
+      margin-bottom: 10px;
     }
 
-    input[type="text"], input[type="password"], input[type="submit"], input[type="radio"] {
-      font-size: 1rem;
-      padding: 10px;
+    input[type="text"], input[type="password"], input[type="submit"] {
       width: 100%;
-      margin-top: 8px;
+      padding: 10px;
+      margin-bottom: 20px;
       border-radius: 5px;
       border: 1px solid #ddd;
       background-color: #f9f9f9;
@@ -73,92 +70,58 @@ sschk();
       outline: none;
     }
 
-    input[type="radio"] {
-      width: auto;
-      margin-right: 10px;
-    }
-
-    .radio-label {
-      display: inline-block;
-      margin-right: 20px;
-    }
-
     input[type="submit"] {
       background-color: #3498db;
       color: white;
+      font-size: 1.2rem;
       border: none;
       cursor: pointer;
-      font-size: 1.2rem;
-      font-weight: bold;
-      padding: 12px;
-      width: 100%;
-      margin-top: 20px;
+      transition: background-color 0.3s;
     }
 
     input[type="submit"]:hover {
       background-color: #2980b9;
     }
 
-    .navbar {
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .navbar a {
-      color: #3498db;
-      text-decoration: none;
-      margin: 0 10px;
+    .radio-label {
+      display: inline-block;
+      margin-right: 20px;
       font-size: 1rem;
     }
 
-    .navbar a:hover {
-      text-decoration: underline;
+    .signup-link {
+      text-align: center;
+      margin-top: 20px;
     }
-
   </style>
 </head>
 <body>
 
-<header>
-  <?php echo $_SESSION["name"]; ?> さん、ようこそ！
-</header>
-
-<!-- ユーザーメニュー -->
-<div class="navbar">
-  <?php include("menu.php"); ?>
-</div>
-
-<!-- Main -->
 <div class="container">
+  <h2>🏉ユーザー登録🏉</h2>
   <form method="post" action="user_insert.php">
-    <fieldset>
-      <legend>ユーザー登録</legend>
-      <label>名前：
-        <input type="text" name="name" required>
+    <label>名前：</label>
+    <input type="text" name="name" required>
+
+    <label>Login ID：</label>
+    <input type="text" name="lid" required>
+
+    <label>Login PW：</label>
+    <input type="password" name="lpw" required>
+
+    <label>管理FLG：</label>
+    <div>
+      <label class="radio-label">
+        <input type="radio" name="kanri_flg" value="0" required> 一般
       </label>
-      <label>Login ID：
-        <input type="text" name="lid" required>
+      <label class="radio-label">
+        <input type="radio" name="kanri_flg" value="1"> 管理者
       </label>
-      <label>Login PW：
-        <input type="password" name="lpw" required>
-      </label>
-      <label>管理FLG：</label>
-      <div>
-        <label class="radio-label">
-          <input type="radio" name="kanri_flg" value="0" required> 一般
-        </label>
-        <label class="radio-label">
-          <input type="radio" name="kanri_flg" value="1"> 管理者
-        </label>
-      </div>
-      <input type="submit" value="送信">
-    </fieldset>
+    </div>
+
+    <input type="submit" value="送信">
   </form>
 </div>
-
-</body>
-</html>
-
 
 </body>
 </html>

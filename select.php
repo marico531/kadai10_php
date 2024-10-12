@@ -126,6 +126,7 @@ if($status==false) {
     <span><?=$_SESSION["name"]?> さん、こんにちわ！</span>
     <div>
       <a href="index.php">チーム登録</a>
+      <a href="user_list.php">登録ユーザー一覧</a> <!-- 追加 -->
       <a href="logout.php">ログアウト</a>
     </div>
   </div>
@@ -133,7 +134,7 @@ if($status==false) {
 
 <!-- メインコンテンツ -->
 <div>
-  <h2>チーム一覧</h2>
+  <h2>🏉チーム一覧🏉</h2>
   <table>
     <thead>
       <tr>

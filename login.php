@@ -1,113 +1,110 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏉チーム一覧登録ログイン🏉</title>
-    <style>
-        /* Reset styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ログイン</title>
+  <style>
+    /* 基本スタイルリセット */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        /* Body setup */
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f7f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #333;
+    }
 
-        /* Central login container */
-        .login-container {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 300px;
-        }
+    .container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
 
-        /* Header styles */
-        header {
-            margin-bottom: 1.5rem;
-        }
+    h2 {
+      text-align: center;
+      color: #34495e;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
 
-        header nav {
-            font-size: 1.5rem;
-            color: #555;
-        }
+    label {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
 
-        /* Input group styling */
-        .input-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
+    input[type="text"], input[type="password"], input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      background-color: #f9f9f9;
+      transition: border-color 0.3s;
+    }
 
-        /* Label and input fields styling */
-        .input-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-            color: #333;
-        }
+    input[type="text"]:focus, input[type="password"]:focus {
+      border-color: #3498db;
+      outline: none;
+    }
 
-        .input-group input {
-            width: 100%;
-            padding: 0.5rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
+    input[type="submit"] {
+      background-color: #3498db;
+      color: white;
+      font-size: 1.2rem;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
 
-        /* Button styling */
-        .login-btn {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: #5cb85c;
-            border: none;
-            border-radius: 4px;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+    input[type="submit"]:hover {
+      background-color: #2980b9;
+    }
 
-        /* Button hover effect */
-        .login-btn:hover {
-            background-color: #4cae4c;
-        }
+    .signup-link {
+      text-align: center;
+      margin-top: 20px;
+    }
 
-        /* Input field focus styling */
-        .input-group input:focus {
-            border-color: #5cb85c;
-            outline: none;
-            box-shadow: 0 0 5px rgba(92, 184, 92, 0.3);
-        }
-    </style>
+    .signup-link a {
+      color: #3498db;
+      text-decoration: none;
+    }
+
+    .signup-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
 
-<div class="login-container">
-    <header>
-        <nav>🏉TEAM RECORD LOGIN🏉</nav>
-    </header>
+<div class="container">
+  <h2>🏉Login🏉</h2>
+  <form name="form1" action="login_act.php" method="post">
+    <label>ID:</label>
+    <input type="text" name="lid" required>
+    
+    <label>PW:</label>
+    <input type="password" name="lpw" required>
+    
+    <input type="submit" value="ログイン">
+  </form>
 
-    <form name="form1" action="login_act.php" method="post">
-        <div class="input-group">
-            <label for="lid">ID:</label>
-            <input type="text" name="lid" id="lid" required>
-        </div>
-        <div class="input-group">
-            <label for="lpw">PW:</label>
-            <input type="password" name="lpw" id="lpw" required>
-        </div>
-        <input type="submit" value="ログイン" class="login-btn">
-    </form>
+  <div class="signup-link">
+  <p>新規ユーザーですか？ <a href="user.php?skip_check=true">ユーザー登録</a></p>
+</div>
+
 </div>
 
 </body>
