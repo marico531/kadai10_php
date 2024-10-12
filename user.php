@@ -17,6 +17,7 @@ if (!isset($_GET['skip_check']) || $_GET['skip_check'] !== 'true') {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ユーザー登録</title>
   <style>
+    <style>
     * {
       margin: 0;
       padding: 0;
@@ -89,9 +90,18 @@ if (!isset($_GET['skip_check']) || $_GET['skip_check'] !== 'true') {
       font-size: 1rem;
     }
 
-    .signup-link {
+    .back-to-login {
       text-align: center;
       margin-top: 20px;
+    }
+
+    .back-to-login a {
+      color: #3498db;
+      text-decoration: none;
+    }
+
+    .back-to-login a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -121,6 +131,11 @@ if (!isset($_GET['skip_check']) || $_GET['skip_check'] !== 'true') {
 
     <input type="submit" value="送信">
   </form>
+
+  <!-- ログインページに戻るリンク -->
+  <div class="back-to-login">
+    <p>既にアカウントをお持ちですか？ <a href="login.php">ログインページに戻る</a></p>
+  </div>
 </div>
 
 </body>
