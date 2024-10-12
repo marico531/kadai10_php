@@ -6,18 +6,18 @@
 <link rel="stylesheet" href="css/main.css" />
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <style>div{padding: 10px;font-size:16px;}</style>
-<title>ログイン</title>
+<title>🏉チーム一覧登録ログイン🏉</title>
 </head>
 <body>
 
 <header>
-  <nav class="navbar navbar-default">LOGIN</nav>
+  <nav class="navbar navbar-default">🏉TEAM RECORD LOGIN🏉</nav>
 </header>
 
 <!-- lLOGINogin_act.php は認証処理用のPHPです。 -->
 <form name="form1" action="login_act.php" method="post">
- ID:<input type="text" name="lid">
- PW:<input type="password" name="lpw">
+ ID:<input type="text" name="lid"><br>
+ PW:<input type="password" name="lpw"><br>
  <input type="submit" value="ログイン">
 </form>
 
