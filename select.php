@@ -118,6 +118,13 @@ if($status==false) {
     }
   }
 </style>
+
+<script>
+    function confirmDelete() {
+      return confirm('削除してもいいですか？');
+    }
+  </script>
+
 </head>
 <body>
 
@@ -158,8 +165,9 @@ if($status==false) {
           <td><?= h($v["naiyou"]) ?></td>
           <td>
             <a href="detail.php?id=<?=h($v["id"])?>">更新</a>
-            <?php if($_SESSION["kanri_flg"]=="1"){ ?>
-            <a href="delete.php?id=<?=h($v["id"])?>">削除</a>
+            <?php if($_SESSION["kanri_flg"] == "1"){ ?>
+              <!-- 削除リンクにconfirmDelete関数を追加 -->
+              <a href="delete.php?id=<?=h($v["id"])?>" onclick="return confirmDelete();">削除</a>
             <?php } ?>
           </td>
         </tr>
