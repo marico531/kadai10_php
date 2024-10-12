@@ -33,13 +33,13 @@ https://otenki-marico.sakura.ne.jp/php04_kadai/login.php
 ## ⑦質問・疑問・感想、シェアしたいこと等なんでも
 
 - [質問]
-  - 1.動画ではパスワードが最初からハッシュ化されています。ハッシュ化されていない状態でDB登録するために「use.php]と「user_insert.php]があるのでしょうjか？ 
-  - 2. エラーメッセージを表示させる以下のコードは全てのphpファイルに記載するのが良いでしょうか？
-    3. // エラーメッセージ表示設定
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
+  - 動画ではパスワードが最初からハッシュ化されています。ハッシュ化されていない状態でDB登録するために「use.php]と「user_insert.php]があるのでしょうjか？
+  - 「user_insert.php]に退会者用のコードがあったのですが、この利用方法を説明いただけると嬉しいです。
+  - エラーメッセージを表示させる以下のコードは全てのphpファイルに記載するのが良いでしょうか？
+   // エラーメッセージ表示設定
+　　ini_set('display_errors', 1);
+　　ini_set('display_startup_errors', 1);
+　　error_reporting(E_ALL);
     4. 
 
 - [感想]
