@@ -4,117 +4,174 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-//0. SESSION開始！！
+// セッション開始
 session_start();
 
 // データベース接続
 include("funcs.php");
 $pdo = db_conn(); // funcs.phpにあるdb_conn()関数を呼び出す
 
-//LOGINチェック → funcs.phpへ関数化しましょう！
+// ログインチェック
 sschk();
 
-//2．データ登録SQL作成
+// データ登録SQL作成
 $sql = "SELECT * FROM rugby_an_db";
 $stmt = $pdo->prepare($sql);
 $status = $stmt->execute();
 
-//３．データ表示
-//状況がfalseだったらエラーを表示する
-$values = "";
+// データ表示処理
 if($status==false) {
   sql_error($stmt);
+} else {
+  $values = $stmt->fetchAll(PDO::FETCH_ASSOC); // 全データ取得
+  $json = json_encode($values,JSON_UNESCAPED_UNICODE); // JSON形式でデータを取り込む
 }
-
-//全データ取得
-//状況がtrueだったらデータを全て$valuesに取り込む
-$values =  $stmt->fetchAll(PDO::FETCH_ASSOC); //PDO::FETCH_ASSOC[カラム名のみで取得できるモード]
-//状況が$valuesのデータをjsonに取り込む場合は以下コードを利用する
-$json = json_encode($values,JSON_UNESCAPED_UNICODE);
-
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>チーム一覧表示</title>
-<link rel="stylesheet" href="css/range.css">
-<link href="css/bootstrap.min.css" rel="stylesheet">
 <style>
-  div { padding: 10px; font-size: 16px; }
-  table { width: 100%; } /* テーブル全体の幅を100%に */
-  th, td { padding: 8px; text-align: left; }
-  th { background-color: #f2f2f2; }
-
-  /* 列の幅を設定 */
-  td:nth-child(2), td:nth-child(4), td:nth-child(6) {
-    white-space: nowrap;  /* 改行を防ぐ */
-    width: 250px;         /* 固定の幅を指定 */
-    overflow: hidden;
-    text-overflow: ellipsis; /* 溢れた場合は省略記号（…）を表示 */
+  /* 全体のリセット */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
   }
 
+  /* ヘッダーのスタイル */
+  header {
+    background-color: #5cb85c;
+    padding: 10px;
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+  }
+
+  /* ナビゲーションリンク */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: #4cae4c;
+    border-radius: 4px;
+  }
+
+  .navbar a:hover {
+    background-color: #45a049;
+  }
+
+  /* テーブルのスタイル */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f2f2f2;
+    color: #333;
+  }
+
+  td a {
+    color: #5cb85c;
+    text-decoration: none;
+  }
+
+  td a:hover {
+    text-decoration: underline;
+  }
+
+  /* レスポンシブ対応 */
+  @media (max-width: 768px) {
+    th, td {
+      display: block;
+      text-align: right;
+    }
+
+    th::before {
+      content: attr(data-label);
+      float: left;
+      font-weight: bold;
+    }
+  }
 </style>
 </head>
-<body id="main">
-<!-- Head[Start] -->
+<body>
+
 <header>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <?=$_SESSION["name"]?> さんこんにちわ！ 
-        <a class="navbar-brand" href="index.php">チーム登録</a><var>
-        <a class="navbar-brand" href="logout.php">ログアウト</a><var>
-      </div>
-      </div>
+  <div class="navbar">
+    <span><?=$_SESSION["name"]?> さん、こんにちわ！</span>
+    <div>
+      <a href="index.php">チーム登録</a>
+      <a href="logout.php">ログアウト</a>
     </div>
-  </nav>
-</header>
-<!-- Head[End] -->
-
-<!-- Main[Start] -->
-<div>
-  <div class="container jumbotron">
-    <table border='1' style='border-collapse: collapse;'>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>チーム名</th>
-          <th>チームサイト</th>
-          <th>メインスタジアム名</th>
-          <th>スタジアムサイト</th>
-          <th>備考</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php foreach($values as $v){ ?>
-          <tr>
-            <td><?= h($v["id"])?></td>
-            <td><?= h($v["team_name"])?></td>
-            <td><a href="<?= h($v["team_url"]) ?>" target="_blank"><?= h($v["team_name"]) ?> 公式サイト</a></td>
-            <td><?= h($v["stadium_name"]) ?></td>
-            <td><a href="<?= h($v["stadium_url"]) ?>" target="_blank"><?= h($v["stadium_name"]) ?> 公式サイト</a></td>
-            <td><?= h($v["naiyou"] )?></td>
-            <!-- detail.phpに飛ばすコード -->
-            <td><a href="detail.php?id=<?=h($v["id"])?>">更新</a></td>
-            <?php if($_SESSION["kanri_flg"]=="1"){ ?>
-            <td><a href="delete.php?id=<?=h($v["id"])?>">削除</a></td>
-            <?php } ?>
-
-          </tr>
-        <?php } ?>
-      </tbody>
-    </table>
   </div>
+</header>
+
+<!-- メインコンテンツ -->
+<div>
+  <h2>チーム一覧</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>チーム名</th>
+        <th>チームサイト</th>
+        <th>メインスタジアム名</th>
+        <th>スタジアムサイト</th>
+        <th>備考</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach($values as $v){ ?>
+        <tr>
+          <td><?= h($v["id"]) ?></td>
+          <td><?= h($v["team_name"]) ?></td>
+          <td><a href="<?= h($v["team_url"]) ?>" target="_blank">公式サイト</a></td>
+          <td><?= h($v["stadium_name"]) ?></td>
+          <td><a href="<?= h($v["stadium_url"]) ?>" target="_blank">公式サイト</a></td>
+          <td><?= h($v["naiyou"]) ?></td>
+          <td>
+            <a href="detail.php?id=<?=h($v["id"])?>">更新</a>
+            <?php if($_SESSION["kanri_flg"]=="1"){ ?>
+            <a href="delete.php?id=<?=h($v["id"])?>">削除</a>
+            <?php } ?>
+          </td>
+        </tr>
+      <?php } ?>
+    </tbody>
+  </table>
 </div>
-<!-- Main[End] -->
 
 <script>
   const jsonData = '<?php echo $json; ?>';
   console.log(JSON.parse(jsonData));
 </script>
+
 </body>
 </html>
+
